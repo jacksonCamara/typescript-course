@@ -1,6 +1,5 @@
 "use strict";
 var Chai = require("chai");
-//import * as supertest from 'supertest'
 var td = require("testdouble");
 var supertest = require('supertest');
 var api_1 = require("../../../server/api/api");

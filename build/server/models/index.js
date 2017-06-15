@@ -6,18 +6,16 @@ var basename = path.basename(module.filename);
 var config = require('../config/env/config')();
 var env = config.env || 'development';
 var db = {};
-if (config.dbURL) {
-    console.log("entrou aqui no dialect 0");
-    var sequelize = new Sequelize(process.env[config.dbURL], {
-        dialect: 'postgres'
-    });
-}
-else {
-    console.log("entrou aqui no dialect");
-    var sequelize = new Sequelize(config.db, config.username, config.password, {
-        dialect: 'postgres'
-    });
-}
+console.log(config.db);
+var sequelize = new Sequelize(config.db, config.username, config.password, {
+    host: 'localhost',
+    dialect: 'postgres',
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    }
+});
 fs
     .readdirSync(__dirname)
     .filter(function (file) {
@@ -32,7 +30,29 @@ Object.keys(db).forEach(function (modelName) {
         db[modelName].associate(db);
     }
 });
+console.log('aqui');
+sequelize
+    .authenticate()
+    .then(function () {
+    console.log('Connection has been established successfully.');
+})
+    .catch(function (err) {
+    console.error('Unable to connect to the database:', err);
+});
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 module.exports = db;
+/*
+if (config.dbURL) {
+  console.log("entrou aqui no dialect 0")
+  var sequelize = new Sequelize(process.env[config.dbURL]);
+} else {
+  console.log("entrou aqui no dialect")
+  var sequelize = new Sequelize(config.db, config.username, config.password,
+    {
+      dialect: 'postgres'
+    }
+  );
+}
+*/ 
 //# sourceMappingURL=index.js.map

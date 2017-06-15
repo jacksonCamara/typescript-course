@@ -1,6 +1,5 @@
 import * as mocha from 'mocha';
 import * as Chai from 'chai';
-//import * as supertest from 'supertest'
 import * as td from 'testdouble';
 const supertest = require('supertest')
 import App from '../../../server/api/api';
