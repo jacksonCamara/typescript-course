@@ -1,4 +1,5 @@
 "use strict";
+var jwt = require("jwt-simple");
 var helpers_1 = require("./config/helpers");
 var HTTPStatus = require("http-status");
 describe('Testes de Integracao', function () {
@@ -6,37 +7,69 @@ describe('Testes de Integracao', function () {
     var config = require('../../server/config/env/config')();
     var model = require('../../server/models');
     var id;
+    var token;
     var cliente = {
         nome: 'cliente',
         email: 'cliente@email.com',
         password: 'cliente'
     };
     var clienteSet = {
-        id: 10,
-        nome: 'clienteSet',
-        email: 'clienteset@email.com',
-        password: 'clienteSet'
+        id: 1,
+        nome: 'jackson',
+        email: 'jackson@email.com',
+        password: '123'
     };
-    /*
-       beforeEach((done) => {
-           model.Clientes.destroy({
-               where: {}
-           }).then(() => {
-               return model.Clientes.create(userDefault);
-           }).then(user => {
-               model.Clientes.create(userTest)
-                   .then(() => {
-                       done();
-                   })
-           }).catch(err =>{
-               console.log("deu erro no before each")
-           })
-       })
-   */
+    beforeEach(function (done) {
+        model.Clientes.destroy({
+            where: {}
+        }).then(function () {
+            return model.Clientes.create(clienteSet);
+        }).then(function (c) {
+            model.Clientes.create(cliente)
+                .then(function () {
+                token = jwt.encode({ id: c.id }, config.secret);
+                done();
+            });
+        }).catch(function (err) {
+            console.log("deu erro no before each");
+        });
+    });
+    describe('POST /token', function () {
+        it('Deve receber um JWT', function (done) {
+            var credentials = {
+                email: clienteSet.email,
+                password: clienteSet.password
+            };
+            helpers_1.request(helpers_1.app)
+                .post('/token')
+                .send(credentials)
+                .end(function (error, res) {
+                helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
+                helpers_1.expect(res.body.token).to.equal("" + token);
+                done(error);
+            });
+        });
+        it('Não deve gerar Token', function (done) {
+            var credentials = {
+                email: 'email@emailqualquer.com',
+                password: 'qualquer'
+            };
+            helpers_1.request(helpers_1.app)
+                .post('/token')
+                .send(credentials)
+                .end(function (error, res) {
+                helpers_1.expect(res.status).to.equal(HTTPStatus.UNAUTHORIZED);
+                helpers_1.expect(res.body).to.empty;
+                done(error);
+            });
+        });
+    });
     describe("POST /api/clientes/create", function () {
         it('Deve criar um novo usuário', function (done) {
             helpers_1.request(helpers_1.app)
                 .post('/api/clientes/create')
+                .set('Content-Type', 'application/json')
+                .set('Authorization', "JWT " + token)
                 .send(cliente)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
@@ -50,10 +83,12 @@ describe('Testes de Integracao', function () {
     describe("GET /api/clientes/:id", function () {
         it('Deve retornar um Json com apenas um usuário', function (done) {
             helpers_1.request(helpers_1.app)
-                .get("/api/clientes/10")
+                .get("/api/clientes/1")
+                .set('Content-Type', 'application/json')
+                .set('Authorization', "JWT " + token)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
-                helpers_1.expect(res.body.payload.id).to.equal(10);
+                helpers_1.expect(res.body.payload.id).to.equal(1);
                 helpers_1.expect(res.body.payload).to.have.all.keys([
                     'id', 'nome', 'email', 'password'
                 ]);
@@ -66,6 +101,8 @@ describe('Testes de Integracao', function () {
         it('Deve atualizar um usuário', function (done) {
             helpers_1.request(helpers_1.app)
                 .put("/api/clientes/" + 10 + "/update")
+                .set('Content-Type', 'application/json')
+                .set('Authorization', "JWT " + token)
                 .send(clienteSet)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
@@ -77,6 +114,8 @@ describe('Testes de Integracao', function () {
         it('Deve retornar um Json com todos os Usuários', function (done) {
             helpers_1.request(helpers_1.app)
                 .get('/api/clientes/all')
+                .set('Content-Type', 'application/json')
+                .set('Authorization', "JWT " + token)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
                 helpers_1.expect(res.body.payload).to.be.an('array');
@@ -91,6 +130,8 @@ describe('Testes de Integracao', function () {
             console.log('integration delete');
             helpers_1.request(helpers_1.app)
                 .delete("/api/clientes/" + 11 + "/destroy")
+                .set('Content-Type', 'application/json')
+                .set('Authorization', "JWT " + token)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
                 done(error);
