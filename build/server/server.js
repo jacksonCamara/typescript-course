@@ -6,7 +6,7 @@ var config = require('./config/env/config')(); //Abre e fecha parentese já faz 
 var server = http.createServer(api_1.default);
 var envi = "" + process.env.NODE_ENV;
 console.log("NODE_ENV" + envi);
-models.sequelize.sync().then(function () {
+models.sequelize.sync({ force: "true" }).then(function () {
     server.listen(config.serverPort);
     server.on('listening', function () { return console.log("Servidor esta Rodando na porta " + config.serverPort); });
     server.on('error', function (error) { return console.log("Ocorreu um erro: " + error); });

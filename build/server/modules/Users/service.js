@@ -5,8 +5,6 @@ var User = (function () {
     function User() {
     }
     User.prototype.create = function (user) {
-        console.log('create service');
-        console.log(model.User);
         return model.Pessoas.create({
             name: user.name,
             email: user.email,

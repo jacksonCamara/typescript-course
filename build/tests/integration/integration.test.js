@@ -6,120 +6,96 @@ describe('Testes de Integracao', function () {
     var config = require('../../server/config/env/config')();
     var model = require('../../server/models');
     var id;
-    var userTest = {
-        id: 11,
-        name: 'Usuário Teste',
-        email: 'teste@email.com',
-        password: 'teste'
+    var cliente = {
+        nome: 'cliente',
+        email: 'cliente@email.com',
+        password: 'cliente'
     };
-    var userDefault = {
+    var clienteSet = {
         id: 10,
-        name: 'Default User',
-        email: 'default@gmail.com',
-        password: 'default'
+        nome: 'clienteSet',
+        email: 'clienteset@email.com',
+        password: 'clienteSet'
     };
-    /**
-     *
-     
-        beforeEach((done) => {
-            model.User.destroy({
-                where: {}
-            }).then(() => {
-                return model.User.create(userDefault);
-            }).then(user => {
-                model.User.create(userTest)
-                    .then(() => {
-                        done();
-                    })
-            }).catch(err =>{
-                console.log("deu erro no before each")
-            })
-        })
-    */
-    describe("POST /api/users/create", function () {
+    /*
+       beforeEach((done) => {
+           model.Clientes.destroy({
+               where: {}
+           }).then(() => {
+               return model.Clientes.create(userDefault);
+           }).then(user => {
+               model.Clientes.create(userTest)
+                   .then(() => {
+                       done();
+                   })
+           }).catch(err =>{
+               console.log("deu erro no before each")
+           })
+       })
+   */
+    describe("POST /api/clientes/create", function () {
         it('Deve criar um novo usuário', function (done) {
-            var user = {
-                name: "Usuario Teste111",
-                email: 'usuario@email.com111',
-                password: 'novouser111'
-            };
             helpers_1.request(helpers_1.app)
-                .post('/api/users/create')
-                .send(user)
+                .post('/api/clientes/create')
+                .send(cliente)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
-                helpers_1.expect(res.body.payload.name).to.equal(user.name);
-                helpers_1.expect(res.body.payload.email).to.equal(user.email);
+                helpers_1.expect(res.body.payload.nome).to.equal(cliente.nome);
+                helpers_1.expect(res.body.payload.email).to.equal(cliente.email);
+                helpers_1.expect(res.body.payload.password).to.equal(cliente.password);
                 done(error);
             });
         });
     });
-    describe("GET /api/users/:id", function () {
+    describe("GET /api/clientes/:id", function () {
         it('Deve retornar um Json com apenas um usuário', function (done) {
             helpers_1.request(helpers_1.app)
-                .get("/api/users/1")
+                .get("/api/clientes/10")
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
-                helpers_1.expect(res.body.payload.id).to.equal(1);
+                helpers_1.expect(res.body.payload.id).to.equal(10);
                 helpers_1.expect(res.body.payload).to.have.all.keys([
-                    'id', 'name', 'email'
+                    'id', 'nome', 'email', 'password'
                 ]);
                 id = res.body.payload.id;
                 done(error);
             });
         });
     });
-    describe("PUT /api/users/all:id/update", function () {
+    describe("PUT /api/clientes/all:id/update", function () {
         it('Deve atualizar um usuário', function (done) {
-            var user = {
-                name: "TesteUpdate",
-                email: "jogo"
-            };
             helpers_1.request(helpers_1.app)
-                .put("/api/users/2/update")
-                .send(user)
+                .put("/api/clientes/" + 10 + "/update")
+                .send(clienteSet)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
                 done(error);
             });
         });
     });
-    /*
-    
-    
-        describe("GET /api/users/all", () => {
-            it('Deve retornar um Json com todos os Usuários', done => {
-                request(app)
-                    .get('/api/users/all')
-                    .end((error, res) => {
-                        expect(res.status).to.equal(HTTPStatus.OK);
-                        expect(res.body.payload).to.be.an('array');
-                        expect(res.body.payload[0].name).to.be.equal(userDefault.name);
-                        expect(res.body.payload[0].email).to.be.equal(userDefault.email);
-                        done(error);
-                    })
+    describe("GET /api/clientes/all", function () {
+        it('Deve retornar um Json com todos os Usuários', function (done) {
+            helpers_1.request(helpers_1.app)
+                .get('/api/clientes/all')
+                .end(function (error, res) {
+                helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
+                helpers_1.expect(res.body.payload).to.be.an('array');
+                helpers_1.expect(res.body.payload[0].nome).to.be.equal(cliente.nome);
+                helpers_1.expect(res.body.payload[0].email).to.be.equal(cliente.email);
+                done(error);
             });
         });
-    
-    
-    
-    
-    
-        describe("PUT /api/users/all:id/update", () => {
-            it('Deve atualizar um usuário', done => {
-                const user = {
-                    nome: "TesteUpdate"
-                }
-                request(app)
-                    .put(`/api/users/${6}/update`)
-                    .send(user)
-                    .end((error, res) => {
-                        expect(res.status).to.equal(HTTPStatus.OK);
-                        done(error);
-                    })
-            })
-        })
-    
-    */
+    });
+    describe("DELETE /api/clientes/:id/destroy", function () {
+        it('Deve deletar o usuário', function (done) {
+            console.log('integration delete');
+            helpers_1.request(helpers_1.app)
+                .delete("/api/clientes/" + 11 + "/destroy")
+                .end(function (error, res) {
+                helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
+                done(error);
+            });
+        });
+    });
 });
 //# sourceMappingURL=integration.test.js.map

@@ -8,7 +8,10 @@ module.exports = function (sequelize, DataType) {
         nome: {
             type: DataType.STRING,
         },
-        cpf: {
+        email: {
+            type: DataType.STRING,
+        },
+        password: {
             type: DataType.STRING,
         }
     });
