@@ -1,31 +1,16 @@
-export default function(sequelize, DataTypes){
-    const User = sequelize.define('User', {
-        id:{
-            type: DataTypes.INTEGER,
+module.exports = (sequelize, DataType) => {
+    const Pessoas = sequelize.define("Pessoas", {
+        id: {
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        name:{
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate:{
-                noEmpty: true
-            }
+        name: {
+            type: DataType.STRING,
         },
-        email:{
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate:{
-                noEmpty: true
-            }
-        },
-        password:{
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate:{
-                noEmpty: true
-            }
+        email: {
+            type: DataType.STRING,
         }
-    })
-    return User;
-}
+    });
+    return Pessoas;
+};

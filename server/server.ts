@@ -13,3 +13,4 @@ server.on('listening', () => console.log(`Servidor esta Rodando na porta ${confi
 server.on('error',  (error: NodeJS.ErrnoException) => console.log(`Ocorreu um erro: ${error}`));
 })
 
+//{force: "true"}

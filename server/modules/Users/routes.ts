@@ -8,11 +8,13 @@ class UserRoutes {
     }
 
     index(req: Request, res: Response){
+        
         return UserCtrl.getAll(req, res)
     }
 
     create(req: Request, res: Response){
         return UserCtrl.createUser(req, res)
+        
     }
 
     findOne(req: Request, res: Response){

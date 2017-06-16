@@ -13,45 +13,47 @@ class User implements IUser{
     }
 
     create(user: any){
-        console.log('ola');
-    
-        return  model.User.create(user);
-
+        console.log('create service')
+        console.log(model.User);
+       return  model.Pessoas.create({
+           name: user.name,
+           email: user.email,
+           password: user.password
+       })
     }
 
     getAll(): Bluebird<IUser[]>{
-        return model.User.findAll({
+        return model.Pessoas.findAll({
             order: ['name'] 
         })
         .then(createUsers)
     }
     getById(id: number): Bluebird<IUserDetail>{
-        return model.User.findOne({
+        return model.Pessoas.findOne({
             where: {id}
         })
         .then(createUserById);
     }
 
     getByEmail(email: string): Bluebird<IUserDetail>{
-                return model.User.findOne({
+                return model.Pessoas.findOne({
             where: {email}
         })
         .then(createUserByEmail);
     }
 
     update(id: number, user: any){
-        return model.User.update(user, {
+        return model.Pessoas.update(user, {
             where: {id},
             fields: ['name', 'email', 'password'] //os dados que podem ser alterados
         })
     }
 
     delete(id: number){
-        return model.User.destroy({
+        return model.Pessoas.destroy({
             where: {id}
         });
     }
-
 }
 
 export default User;

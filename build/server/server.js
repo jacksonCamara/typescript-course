@@ -11,4 +11,5 @@ models.sequelize.sync().then(function () {
     server.on('listening', function () { return console.log("Servidor esta Rodando na porta " + config.serverPort); });
     server.on('error', function (error) { return console.log("Ocorreu um erro: " + error); });
 });
+//{force: "true"} 
 //# sourceMappingURL=server.js.map

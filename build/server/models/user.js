@@ -1,35 +1,17 @@
-"use strict";
-function default_1(sequelize, DataTypes) {
-    var User = sequelize.define('User', {
+module.exports = function (sequelize, DataType) {
+    var Pessoas = sequelize.define("Pessoas", {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                noEmpty: true
-            }
+            type: DataType.STRING,
         },
         email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                noEmpty: true
-            }
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                noEmpty: true
-            }
+            type: DataType.STRING,
         }
     });
-    return User;
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = default_1;
+    return Pessoas;
+};
 //# sourceMappingURL=user.js.map
