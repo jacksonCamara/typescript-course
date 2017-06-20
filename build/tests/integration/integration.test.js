@@ -10,14 +10,51 @@ describe('Testes de Integracao', function () {
     var token;
     var cliente = {
         nome: 'cliente',
+        cpf: "0342098340932",
         email: 'cliente@email.com',
-        password: 'cliente'
+        password: 'cliente',
+        telefones: [
+            {
+                numero: "AAAAAAAAA"
+            },
+            {
+                numero: "BBBBBBBBBBBB"
+            }
+        ],
+        enderecos: [
+            {
+                cep: "888888",
+                rua: "88888888"
+            },
+            {
+                cep: "9999999",
+                rua: "99999999"
+            }
+        ]
     };
     var clienteSet = {
-        id: 1,
-        nome: 'jackson',
-        email: 'jackson@email.com',
-        password: '123'
+        nome: 'cliente1',
+        cpf: "03420983409321",
+        email: 'cliente@email.com1',
+        password: 'cliente1',
+        telefones: [
+            {
+                numero: "AAAAAAAAA1"
+            },
+            {
+                numero: "BBBBBBBBBBBB1"
+            }
+        ],
+        enderecos: [
+            {
+                cep: "8888881",
+                rua: "888888881"
+            },
+            {
+                cep: "99999991",
+                rua: "999999991"
+            }
+        ]
     };
     beforeEach(function (done) {
         model.Clientes.destroy({
@@ -75,7 +112,6 @@ describe('Testes de Integracao', function () {
                 helpers_1.expect(res.status).to.equal(HTTPStatus.OK);
                 helpers_1.expect(res.body.payload.nome).to.equal(cliente.nome);
                 helpers_1.expect(res.body.payload.email).to.equal(cliente.email);
-                helpers_1.expect(res.body.payload.password).to.equal(cliente.password);
                 done(error);
             });
         });
@@ -100,7 +136,7 @@ describe('Testes de Integracao', function () {
     describe("PUT /api/clientes/all:id/update", function () {
         it('Deve atualizar um usuário', function (done) {
             helpers_1.request(helpers_1.app)
-                .put("/api/clientes/" + 10 + "/update")
+                .put("/api/clientes/" + 1 + "/update")
                 .set('Content-Type', 'application/json')
                 .set('Authorization', "JWT " + token)
                 .send(clienteSet)
@@ -129,7 +165,7 @@ describe('Testes de Integracao', function () {
         it('Deve deletar o usuário', function (done) {
             console.log('integration delete');
             helpers_1.request(helpers_1.app)
-                .delete("/api/clientes/" + 11 + "/destroy")
+                .delete("/api/clientes/" + 1 + "/destroy")
                 .set('Content-Type', 'application/json')
                 .set('Authorization', "JWT " + token)
                 .end(function (error, res) {

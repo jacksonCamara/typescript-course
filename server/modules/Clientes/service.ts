@@ -5,15 +5,28 @@ const model = require('../../models');
 class Clientes implements ICliente {
     public id: number;
     public nome: string;
+    public cpf: string;
     public email: string;
     public password: string;
 
     constructor() {
-
+         //   model.Telefones.belongsTo(model.Clientes);
+         //    model.Enderecos.belongsTo(model.Clientes);
+           //                      model.Clientes.hasMany(model.Telefones, { foreignKey: 'telId' });
+           //         model.Clientes.hasMany(model.Enderecos, { onDelete: 'cascade', onUpdate: 'cascade' });
     }
 
     create(cliente: any) {
-        return model.Clientes.create(cliente)
+        return model.Clientes.create({
+            nome: cliente.nome,
+            cpf: cliente.cpf,
+            email: cliente.email,
+            password: cliente.password,
+            Telefones: cliente.telefones,
+            Enderecos: cliente.enderecos,
+        }, {
+                include: [{ model: model.Telefones }, { model: model.Enderecos }]
+            })
     }
 
     getAll(): Bluebird<ICliente[]> {
@@ -27,7 +40,7 @@ class Clientes implements ICliente {
         return model.Clientes.findOne({
             where: { id }
         })
-            .then(createClienteById);
+        .then(createClienteById);
     }
 
     getByEmail(email: string): Bluebird<IClienteDetail> {
@@ -40,7 +53,9 @@ class Clientes implements ICliente {
     update(id: number, user: any) {
         return model.Clientes.update(user, {
             where: { id },
-            fields: ['nome', 'email', 'password'] //os dados que podem ser alterados
+            fields: ['nome', 'email', 'password'], //os dados que podem ser alterados
+            hooks: true,
+            individualHooks: true
         })
     }
 

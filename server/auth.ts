@@ -7,7 +7,7 @@ export default function AuthConfig() {
     const ClienteService = new Clientes();
     let opts = {
         secretOrKey: config.secret,
-        jwtFromRequest: ExtractJwt.fromAuthHeader();
+        jwtFromRequest: ExtractJwt.fromAuthHeader()
     };
 
     passport.use(new Strategy(opts, (jwtPayload, done) => {
@@ -15,7 +15,7 @@ export default function AuthConfig() {
             .then(cliente => {
                 if (cliente) {
                     return done(null, {
-                        id: cliente.id;
+                        id: cliente.id,
                         email: cliente.email
                     })
                 }

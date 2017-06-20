@@ -1,4 +1,4 @@
-'use strict';
+
 
 var fs = require('fs');
 var path = require('path');
@@ -10,15 +10,15 @@ var db = {};
 
 console.log(config.db)
 
-  const sequelize = new Sequelize(config.db, config.username, config.password, {
-    host: 'localhost',
-    dialect: 'postgres',
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 10000
-    }
-  });
+const sequelize = new Sequelize(config.db, config.username, config.password, {
+  host: 'localhost',
+  dialect: 'postgres',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
+});
 
 
 fs
@@ -32,11 +32,17 @@ fs
   });
 
 Object.keys(db).forEach(function (modelName) {
+  console.log('===================entrou no index =======================')
+
+  console.log(db[modelName])
+  console.log(db[modelName].associate)
   if (db[modelName].associate) {
+    console.log('===================entrou no index associate=======================')
+    console.log(db[modelName])
     db[modelName].associate(db);
   }
 });
-console.log('aqui')
+
 sequelize
   .authenticate()
   .then(() => {
