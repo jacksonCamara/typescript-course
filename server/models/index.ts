@@ -32,13 +32,9 @@ fs
   });
 
 Object.keys(db).forEach(function (modelName) {
-  console.log('===================entrou no index =======================')
 
-  console.log(db[modelName])
-  console.log(db[modelName].associate)
   if (db[modelName].associate) {
-    console.log('===================entrou no index associate=======================')
-    console.log(db[modelName])
+
     db[modelName].associate(db);
   }
 });

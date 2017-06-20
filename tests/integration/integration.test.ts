@@ -64,7 +64,7 @@ describe('Testes de Integracao', () => {
         ]
     }
 
-
+/*
     beforeEach((done) => {
         model.Clientes.destroy({
             where: {}
@@ -116,7 +116,7 @@ describe('Testes de Integracao', () => {
 
 
 
-
+*/
     describe("POST /api/clientes/create", () => {
         it('Deve criar um novo usuário', done => {
             request(app)
@@ -132,7 +132,7 @@ describe('Testes de Integracao', () => {
                 })
         })
     })
-
+/*
     describe("GET /api/clientes/:id", () => {
         it('Deve retornar um Json com apenas um usuário', done => {
             request(app)
@@ -195,7 +195,7 @@ describe('Testes de Integracao', () => {
                 })
         });
     });
-
+*/
 
 
 

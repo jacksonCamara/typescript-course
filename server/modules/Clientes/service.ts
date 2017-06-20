@@ -10,10 +10,7 @@ class Clientes implements ICliente {
     public password: string;
 
     constructor() {
-         //   model.Telefones.belongsTo(model.Clientes);
-         //    model.Enderecos.belongsTo(model.Clientes);
-           //                      model.Clientes.hasMany(model.Telefones, { foreignKey: 'telId' });
-           //         model.Clientes.hasMany(model.Enderecos, { onDelete: 'cascade', onUpdate: 'cascade' });
+
     }
 
     create(cliente: any) {

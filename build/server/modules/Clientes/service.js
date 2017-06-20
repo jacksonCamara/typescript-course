@@ -3,10 +3,6 @@ var interface_1 = require("./interface");
 var model = require('../../models');
 var Clientes = (function () {
     function Clientes() {
-        //   model.Telefones.belongsTo(model.Clientes);
-        //    model.Enderecos.belongsTo(model.Clientes);
-        //                      model.Clientes.hasMany(model.Telefones, { foreignKey: 'telId' });
-        //         model.Clientes.hasMany(model.Enderecos, { onDelete: 'cascade', onUpdate: 'cascade' });
     }
     Clientes.prototype.create = function (cliente) {
         return model.Clientes.create({
