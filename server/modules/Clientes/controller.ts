@@ -16,7 +16,6 @@ class ClienteController {
     }
 
     createCliente(req: Request, res: Response) {
-         console.log('create controller=================================================')
         this.ClienteService.create(req.body)
             .then(_.partial(onSuccess, res))
             .catch(_.partial(dbErrorHandler, res))

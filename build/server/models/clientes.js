@@ -1,6 +1,6 @@
 "use strict";
 module.exports = function (sequelize, DataType) {
-    var Clientes = sequelize.define("Clientes", {
+    var Clientes = sequelize.define("clientes", {
         id: {
             type: DataType.INTEGER,
             primaryKey: true,
@@ -19,8 +19,8 @@ module.exports = function (sequelize, DataType) {
         timestamps: false
     });
     Clientes.associate = function (models) {
-        Clientes.hasMany(models.Telefones);
-        Clientes.hasMany(models.Enderecos);
+        Clientes.hasMany(models.telefones);
+        Clientes.hasMany(models.enderecos);
     };
     return Clientes;
 };

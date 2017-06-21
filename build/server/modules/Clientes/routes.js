@@ -9,7 +9,6 @@ var ClienteRoutes = (function () {
         return ClienteCtrl.getAll(req, res);
     };
     ClienteRoutes.prototype.create = function (req, res) {
-        console.log('routes service=================================================');
         return ClienteCtrl.createCliente(req, res);
     };
     ClienteRoutes.prototype.findOne = function (req, res) {

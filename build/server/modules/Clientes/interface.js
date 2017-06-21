@@ -8,16 +8,15 @@ function createEndereco(_a) {
     return { rua: rua, numeroResidencia: numeroResidencia, bairro: bairro, cidade: cidade, estado: estado };
 }
 function createCliente(_a) {
-    var id = _a.id, nome = _a.nome, Telefones = _a.Telefones, Enderecos = _a.Enderecos;
-    Telefones = Telefones.map(createTelefone);
-    Enderecos = Enderecos.map(createEndereco);
+    var id = _a.id, nome = _a.nome, email = _a.email, password = _a.password, telefones = _a.telefones, enderecos = _a.enderecos;
+    telefones = telefones.map(createTelefone);
+    enderecos = enderecos.map(createEndereco);
     return {
-        id: id, nome: nome, Telefones: Telefones, Enderecos: Enderecos
+        id: id, nome: nome, email: email, password: password, telefones: telefones, enderecos: enderecos
     };
 }
 exports.createCliente = createCliente;
 function createClientes(data) {
-    //console.log(JSON.stringify(data))
     return data.map(createCliente);
 }
 exports.createClientes = createClientes;

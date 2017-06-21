@@ -1,28 +1,30 @@
-{
-    "payload": [
         {
-            "id": 1,
+            
             "nome": "aaaaaaa",
-            "Telefones": [
+            "email": "aaaaaaa",
+            "password": "aaaaaaa",
+            "telefones": [
                 {
                     "numero": "aaaaaaa"
                 },
                 {
                     "numero": "aaaaaaa"
                 }
-            ]
-        },
-        {
-            "id": 2,
-            "nome": "aaaaaaa",
-            "Telefones": [
+            ],
+            "enderecos": [
                 {
-                    "numero": "aaaaaaa"
+                    "rua": "aaaeuua",
+                    "numeroResidencia": "aaaaaaa",
+                    "bairro": "aaaaaaa",
+                    "cidade": "aaaaaaa",
+                    "estado": "aaaaaaa"
                 },
                 {
-                    "numero": "aaaaaaa"
+                    "rua": "aaaaaaa",
+                    "numeroResidencia": "aaaaaaa",
+                    "bairro": "aaaaaaa",
+                    "cidade": "aaaaaaa",
+                    "estado": "aaaaaaa"
                 }
             ]
         }
-    ]
-}

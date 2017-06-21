@@ -13,7 +13,6 @@ class ClienteRoutes {
     }
 
     create(req: Request, res: Response){
-         console.log('routes service=================================================')
         return ClienteCtrl.createCliente(req, res)
         
     }

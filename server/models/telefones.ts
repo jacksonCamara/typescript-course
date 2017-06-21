@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => {
-  const Telefones = sequelize.define("Telefones", {
+  const Telefones = sequelize.define("telefones", {
     id: {
       type: DataType.INTEGER,
       primaryKey: true,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataType) => {
         timestamps: false
     });
   Telefones.associate = models => {
-    Telefones.belongsTo(models.Clientes);
+    Telefones.belongsTo(models.clientes);
   }
 
   return Telefones;

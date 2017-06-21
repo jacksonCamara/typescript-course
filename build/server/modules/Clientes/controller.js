@@ -9,7 +9,6 @@ var ClienteController = (function () {
         this.ClienteService = new service_1.default();
     }
     ClienteController.prototype.createCliente = function (req, res) {
-        console.log('create controller=================================================');
         this.ClienteService.create(req.body)
             .then(_.partial(successHandler_1.onSuccess, res))
             .catch(_.partial(dbErrorHandler_1.dbErrorHandler, res))

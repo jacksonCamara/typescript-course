@@ -1,6 +1,6 @@
 import { Application, Request, Response } from 'express';
 import ClienteRoutes from '../../modules/Clientes/routes';
-import TokenRoutes from '../../modules/auth/auth'
+
 const model = require('../../models');
 
 class Routes {
@@ -8,10 +8,8 @@ class Routes {
     private tokenRoute;
     private auth;
     
-    constructor(app: Application, auth: any) {
+    constructor(app: Application) {
         this.router = new ClienteRoutes();
-        this.tokenRoute = new TokenRoutes();
-        this.auth = auth;
         this.getRoutes(app);
     }
 
@@ -21,7 +19,7 @@ class Routes {
         app.route('/api/clientes/:id').get(this.router.findOne);
         app.route('/api/clientes/:id/update').put(this.router.update);
         app.route('/api/clientes/:id/destroy').delete(this.router.destroy);
-        app.route('/token').post(this.tokenRoute.auth)
+
     }
 
 

@@ -1,22 +1,24 @@
-export interface ICliente{
+export interface ICliente {
     readonly id: number,
     nome: string,
-    Telefones: Array<ITelefone>
-    Enderecos: Array<IEndereco>
+    email: string,
+    password: string
+    telefones: Array<ITelefone>
+    enderecos: Array<IEndereco>
 }
 
-export interface IClienteDetail  {
+export interface IClienteDetail {
     id: number,
     nome: string,
     email: string,
     password: string
 }
 
-export interface ITelefone{
+export interface ITelefone {
     numero: string
 }
 
-export interface IEndereco{
+export interface IEndereco {
     rua: string,
     numeroResidencia: string;
     bairro: string,
@@ -24,24 +26,23 @@ export interface IEndereco{
     estado: string
 }
 
-function createTelefone({numero}: any):ITelefone{
-    return{numero}
+function createTelefone({ numero }: any): ITelefone {
+    return { numero }
 }
 
-function createEndereco({rua, numeroResidencia, bairro, cidade, estado}: any):IEndereco{
-    return{rua, numeroResidencia, bairro, cidade, estado}
+function createEndereco({ rua, numeroResidencia, bairro, cidade, estado }: any): IEndereco {
+    return { rua, numeroResidencia, bairro, cidade, estado }
 }
 
-export function createCliente({ id, nome, Telefones, Enderecos}: any): ICliente {
-    Telefones = Telefones.map(createTelefone);
-    Enderecos = Enderecos.map(createEndereco);
+export function createCliente({ id, nome, email, password, telefones, enderecos }: any): ICliente {
+    telefones = telefones.map(createTelefone);
+    enderecos = enderecos.map(createEndereco);
     return {
-        id, nome, Telefones, Enderecos
+        id, nome, email, password, telefones, enderecos
     }
 }
 
-export function createClientes(data: any[]): ICliente[] {    
-    //console.log(JSON.stringify(data))
+export function createClientes(data: any[]): ICliente[] {
     return data.map(createCliente)
 }
 

@@ -1,12 +1,9 @@
 "use strict";
 var routes_1 = require("../../modules/Clientes/routes");
-var auth_1 = require("../../modules/auth/auth");
 var model = require('../../models');
 var Routes = (function () {
-    function Routes(app, auth) {
+    function Routes(app) {
         this.router = new routes_1.default();
-        this.tokenRoute = new auth_1.default();
-        this.auth = auth;
         this.getRoutes(app);
     }
     Routes.prototype.getRoutes = function (app) {
@@ -15,7 +12,6 @@ var Routes = (function () {
         app.route('/api/clientes/:id').get(this.router.findOne);
         app.route('/api/clientes/:id/update').put(this.router.update);
         app.route('/api/clientes/:id/destroy').delete(this.router.destroy);
-        app.route('/token').post(this.tokenRoute.auth);
     };
     return Routes;
 }());
