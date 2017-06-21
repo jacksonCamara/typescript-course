@@ -13,6 +13,7 @@ class ClienteRoutes {
     }
 
     create(req: Request, res: Response){
+         console.log('routes service=================================================')
         return ClienteCtrl.createCliente(req, res)
         
     }
@@ -26,7 +27,6 @@ class ClienteRoutes {
     }
 
     destroy(req: Request, res: Response){
-        console.log('aqui na rota do cliente')
         return ClienteCtrl.deleteCliente(req, res)
     }
 }

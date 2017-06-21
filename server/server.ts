@@ -7,7 +7,7 @@ const server = http.createServer(Api);
 var envi = `${process.env.NODE_ENV}`
 console.log("NODE_ENV" + envi)
 
-models.sequelize.sync({force: "true"}).then(() =>{
+models.sequelize.sync().then(() =>{
 server.listen(config.serverPort);
 server.on('listening', () => console.log(`Servidor esta Rodando na porta ${config.serverPort}`));
 server.on('error',  (error: NodeJS.ErrnoException) => console.log(`Ocorreu um erro: ${error}`));

@@ -9,6 +9,7 @@ var ClienteRoutes = (function () {
         return ClienteCtrl.getAll(req, res);
     };
     ClienteRoutes.prototype.create = function (req, res) {
+        console.log('routes service=================================================');
         return ClienteCtrl.createCliente(req, res);
     };
     ClienteRoutes.prototype.findOne = function (req, res) {
@@ -18,7 +19,6 @@ var ClienteRoutes = (function () {
         return ClienteCtrl.updateCliente(req, res);
     };
     ClienteRoutes.prototype.destroy = function (req, res) {
-        console.log('aqui na rota do cliente');
         return ClienteCtrl.deleteCliente(req, res);
     };
     return ClienteRoutes;

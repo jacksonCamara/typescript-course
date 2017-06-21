@@ -5,22 +5,10 @@ module.exports = function (sequelize, DataType) {
             primaryKey: true,
             autoIncrement: true
         },
-        cep: {
-            type: DataType.STRING
-        },
         rua: {
             type: DataType.STRING
         },
         numeroResidencia: {
-            type: DataType.STRING
-        },
-        edificio: {
-            type: DataType.STRING
-        },
-        numeroApartamento: {
-            type: DataType.STRING
-        },
-        blocoApartamento: {
             type: DataType.STRING
         },
         bairro: {
@@ -29,9 +17,11 @@ module.exports = function (sequelize, DataType) {
         cidade: {
             type: DataType.STRING
         },
-        pontoReferencia: {
+        estado: {
             type: DataType.STRING
         },
+    }, {
+        timestamps: false
     });
     Enderecos.associate = function (models) {
         Enderecos.belongsTo(models.Clientes);

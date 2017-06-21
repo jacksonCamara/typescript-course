@@ -14,9 +14,10 @@ class Clientes implements ICliente {
     }
 
     create(cliente: any) {
+        console.log('create service=================================================')
+        JSON.stringify(cliente);
         return model.Clientes.create({
             nome: cliente.nome,
-            cpf: cliente.cpf,
             email: cliente.email,
             password: cliente.password,
             Telefones: cliente.telefones,
@@ -29,15 +30,18 @@ class Clientes implements ICliente {
     getAll(): Bluebird<ICliente[]> {
         console.log('getall')
         return model.Clientes.findAll({
-            order: ['nome']
-        })
+             include: [{ model: model.Telefones }, { model: model.Enderecos }]
+           
+        }, {
+                order: ['nome']
+            })
             .then(createClientes)
     }
     getById(id: number): Bluebird<IClienteDetail> {
         return model.Clientes.findOne({
             where: { id }
         })
-        .then(createClienteById);
+            .then(createClienteById);
     }
 
     getByEmail(email: string): Bluebird<IClienteDetail> {

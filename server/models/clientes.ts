@@ -7,9 +7,6 @@ module.exports = (sequelize, DataType) => {
             primaryKey: true,
             autoIncrement: true
         },
-        cpf: {
-            type: DataType.STRING,
-        },
         nome: {
             type: DataType.STRING,
         },
@@ -18,27 +15,14 @@ module.exports = (sequelize, DataType) => {
         },
         password: {
             type: DataType.STRING,
-        },
-        sexo: {
-            type: DataType.STRING,
-        }
+        },  
+    },{
+        timestamps: false
     });
     Clientes.associate = models => {
         Clientes.hasMany(models.Telefones);
         Clientes.hasMany(models.Enderecos);
     }
 
-    Clientes.beforeCreate((cliente) => {
-        return hashPassword(cliente);
-    })
-
-    Clientes.beforeUpdate((cliente) => {
-        return hashPassword(cliente);
-    })
-
-    function hashPassword(user) {
-        const salt = bcrypt.genSaltSync(10)
-        user.set('password', bcrypt.hashSync(user.password, salt))
-    }
     return Clientes;
 };

@@ -8,8 +8,9 @@ module.exports = (sequelize, DataType) => {
     numero: {
       type: DataType.STRING,
     }
-  });
-
+    },{
+        timestamps: false
+    });
   Telefones.associate = models => {
     Telefones.belongsTo(models.Clientes);
   }

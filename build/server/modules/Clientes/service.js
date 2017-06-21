@@ -5,9 +5,10 @@ var Clientes = (function () {
     function Clientes() {
     }
     Clientes.prototype.create = function (cliente) {
+        console.log('create service=================================================');
+        JSON.stringify(cliente);
         return model.Clientes.create({
             nome: cliente.nome,
-            cpf: cliente.cpf,
             email: cliente.email,
             password: cliente.password,
             Telefones: cliente.telefones,
@@ -19,6 +20,8 @@ var Clientes = (function () {
     Clientes.prototype.getAll = function () {
         console.log('getall');
         return model.Clientes.findAll({
+            include: [{ model: model.Telefones }, { model: model.Enderecos }]
+        }, {
             order: ['nome']
         })
             .then(interface_1.createClientes);

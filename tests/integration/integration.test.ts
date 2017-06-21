@@ -14,188 +14,159 @@ describe('Testes de Integracao', () => {
 
     const cliente = {
         nome: 'cliente',
-        cpf: "0342098340932",
         email: 'cliente@email.com',
         password: 'cliente',
-
         telefones: [
             {
-                numero: "AAAAAAAAA"
+                numero: "996265259"
             },
             {
-                numero: "BBBBBBBBBBBB"
+                numero: "996440183"
             }
         ],
         enderecos: [
             {
-                cep: "888888",
-                rua: "88888888"
+                rua: "hortensias",
+                numeroResidencia: "605",
+                bairro: "teste",
+                cidade: "itajaí",
+                estado: "SC"
             },
             {
-                cep: "9999999",
-                rua: "99999999"
+                rua: "stringari",
+                numeroResidencia: "555",
+                bairro: "teste",
+                cidade: "itajaí",
+                estado: "SC"
             }
         ]
     };
 
-    const clienteSet = {
-        nome: 'cliente1',
-        cpf: "03420983409321",
-        email: 'cliente@email.com1',
-        password: 'cliente1',
-
+       const clienteSet = {
+        nome: 'aaaaaaa',
+        email: 'aaaaaaa',
+        password: 'aaaaaaa',
         telefones: [
             {
-                numero: "AAAAAAAAA1"
+                numero: "aaaaaaa"
             },
             {
-                numero: "BBBBBBBBBBBB1"
+                numero: "aaaaaaa"
             }
         ],
         enderecos: [
             {
-                cep: "8888881",
-                rua: "888888881"
+                rua: "aaaaaaa",
+                numeroResidencia: "aaaaaaa",
+                bairro: "aaaaaaa",
+                cidade: "aaaaaaa",
+                estado: "aaaaaaa"
             },
             {
-                cep: "99999991",
-                rua: "999999991"
+                rua: "aaaaaaa",
+                numeroResidencia: "aaaaaaa",
+                bairro: "aaaaaaa",
+                cidade: "aaaaaaa",
+                estado: "aaaaaaa"
             }
         ]
-    }
-
-/*
-    beforeEach((done) => {
-        model.Clientes.destroy({
-            where: {}
-        }).then(() => {
-            return model.Clientes.create(clienteSet);
-        }).then(c => {
-            model.Clientes.create(cliente)
-                .then(() => {
-                    token = jwt.encode({ id: c.id }, config.secret)
-                    done();
-                })
-        }).catch(err => {
-            console.log("deu erro no before each")
-        })
-    })
+    };
 
 
-    describe('POST /token', () => {
-        it('Deve receber um JWT', done => {
-            const credentials = {
-                email: clienteSet.email,
-                password: clienteSet.password
-            };
-            request(app)
-                .post('/token')
-                .send(credentials)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.OK);
-                    expect(res.body.token).to.equal(`${token}`)
-                    done(error);
-                });
+
+        describe("GET /api/clientes/all", () => {
+            it('Deve retornar um Json com todos os Usuários', done => {
+                request(app)
+                    .get('/api/clientes/all')
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', `JWT ${token}`)
+                    .end((error, res) => {
+                        expect(res.status).to.equal(HTTPStatus.OK);
+                        expect(res.body.payload).to.be.an('array');
+                        expect(res.body.payload[0].nome).to.be.equal(cliente.nome);
+                        expect(res.body.payload[0].email).to.be.equal(cliente.email);
+                        done(error);
+                    })
+            });
         });
 
-        it('Não deve gerar Token', done => {
-            const credentials = {
-                email: 'email@emailqualquer.com',
-                password: 'qualquer'
-            };
-            request(app)
-                .post('/token')
-                .send(credentials)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.UNAUTHORIZED);
-                    expect(res.body).to.empty;
-                    done(error);
-                })
-        })
-    })
-
-
-
-*/
     describe("POST /api/clientes/create", () => {
         it('Deve criar um novo usuário', done => {
             request(app)
                 .post('/api/clientes/create')
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWT ${token}`)
-                .send(cliente)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.OK);
-                    expect(res.body.payload.nome).to.equal(cliente.nome);
-                    expect(res.body.payload.email).to.equal(cliente.email);
-                    done(error);
-                })
-        })
-    })
-/*
-    describe("GET /api/clientes/:id", () => {
-        it('Deve retornar um Json com apenas um usuário', done => {
-            request(app)
-                .get(`/api/clientes/1`)
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWT ${token}`)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.OK);
-                    expect(res.body.payload.id).to.equal(1)
-                    expect(res.body.payload).to.have.all.keys([
-                        'id', 'nome', 'email', 'password'
-                    ]);
-                    id = res.body.payload.id;
-                    done(error);
-                });
-        });
-    });
-
-    describe("PUT /api/clientes/all:id/update", () => {
-        it('Deve atualizar um usuário', done => {
-            request(app)
-                .put(`/api/clientes/${1}/update`)
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWT ${token}`)
                 .send(clienteSet)
                 .end((error, res) => {
                     expect(res.status).to.equal(HTTPStatus.OK);
+                    expect(res.body.payload.nome).to.equal(clienteSet.nome);
+                    expect(res.body.payload.email).to.equal(clienteSet.email);
                     done(error);
                 })
         })
     })
-
-
-    describe("GET /api/clientes/all", () => {
-        it('Deve retornar um Json com todos os Usuários', done => {
-            request(app)
-                .get('/api/clientes/all')
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWT ${token}`)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.OK);
-                    expect(res.body.payload).to.be.an('array');
-                    expect(res.body.payload[0].nome).to.be.equal(cliente.nome);
-                    expect(res.body.payload[0].email).to.be.equal(cliente.email);
-                    done(error);
-                })
+  /*  
+        describe("GET /api/clientes/:id", () => {
+            it('Deve retornar um Json com apenas um usuário', done => {
+                request(app)
+                    .get(`/api/clientes/1`)
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', `JWT ${token}`)
+                    .end((error, res) => {
+                        expect(res.status).to.equal(HTTPStatus.OK);
+                        expect(res.body.payload.id).to.equal(1)
+                        expect(res.body.payload).to.have.all.keys([
+                            'id', 'nome', 'email', 'password'
+                        ]);
+                        id = res.body.payload.id;
+                        done(error);
+                    });
+            });
         });
-    });
-
-    describe("DELETE /api/clientes/:id/destroy", () => {
-        it('Deve deletar o usuário', done => {
-            console.log('integration delete')
-            request(app)
-                .delete(`/api/clientes/${1}/destroy`)
-                .set('Content-Type', 'application/json')
-                .set('Authorization', `JWT ${token}`)
-                .end((error, res) => {
-                    expect(res.status).to.equal(HTTPStatus.OK);
-                    done(error);
-                })
+    
+        describe("PUT /api/clientes/all:id/update", () => {
+            it('Deve atualizar um usuário', done => {
+                request(app)
+                    .put(`/api/clientes/${1}/update`)
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', `JWT ${token}`)
+                    .send(clienteSet)
+                    .end((error, res) => {
+                        expect(res.status).to.equal(HTTPStatus.OK);
+                        done(error);
+                    })
+            })
+        })
+    
+    
+        describe("GET /api/clientes/all", () => {
+            it('Deve retornar um Json com todos os Usuários', done => {
+                request(app)
+                    .get('/api/clientes/all')
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', `JWT ${token}`)
+                    .end((error, res) => {
+                        expect(res.status).to.equal(HTTPStatus.OK);
+                        expect(res.body.payload).to.be.an('array');
+                        expect(res.body.payload[0].nome).to.be.equal(cliente.nome);
+                        expect(res.body.payload[0].email).to.be.equal(cliente.email);
+                        done(error);
+                    })
+            });
         });
-    });
-*/
+    
+        describe("DELETE /api/clientes/:id/destroy", () => {
+            it('Deve deletar o usuário', done => {
+                console.log('integration delete')
+                request(app)
+                    .delete(`/api/clientes/${1}/destroy`)
+                    .set('Content-Type', 'application/json')
+                    .set('Authorization', `JWT ${token}`)
+                    .end((error, res) => {
+                        expect(res.status).to.equal(HTTPStatus.OK);
+                        done(error);
+                    })
+            });
+        });
+    */
 
 
 
